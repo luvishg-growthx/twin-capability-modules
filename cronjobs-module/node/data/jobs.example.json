@@ -1,0 +1,18 @@
+[
+  {
+    "id": "example-1",
+    "title": "hi message",
+    "runAt": "2026-06-21T14:30:00",
+    "prompt": "Write me a short, friendly hi message to start the afternoon.",
+    "status": "pending",
+    "lastRun": null
+  },
+  {
+    "id": "example-2",
+    "title": "daily standup nudge",
+    "cron": "30 9 * * 1-5",
+    "message": "Standup in 30 minutes — jot down your 3 bullets.",
+    "status": "pending",
+    "lastRun": null
+  }
+]

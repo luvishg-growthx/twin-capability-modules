@@ -1,0 +1,12 @@
+{
+  "name": "twin-scheduler",
+  "version": "1.0.0",
+  "description": "Cronjobs / scheduled messages for your Claude Code twin.",
+  "main": "scheduler.js",
+  "scripts": {
+    "start": "node scheduler.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.0"
+  }
+}
