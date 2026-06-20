@@ -450,6 +450,9 @@ app.event("message", async ({ event, say, client }) => {
   await app.start();
   const auth = await app.client.auth.test();
   selfUserId = auth.user_id;
+  // If the cronjobs module is installed, auto-start its scheduler here so
+  // scheduled messages fire even when only the Slack bot runs. No-op otherwise.
+  try { require("./scheduler.js").startScheduler(); } catch (_) {}
   console.log(`⚡️ Twin Slack bot running as @${auth.user} (${selfUserId})`);
   console.log(`   twin dir: ${TWIN_DIR}`);
 })();
@@ -843,6 +846,13 @@ def on_message(event, say, client):
 
 
 if __name__ == "__main__":
+    # If the cronjobs module is installed, auto-start its scheduler here so
+    # scheduled messages fire even when only the Slack bot runs. No-op otherwise.
+    try:
+        from scheduler import start_scheduler
+        start_scheduler()
+    except Exception:
+        pass
     print(f"⚡️ Twin Slack bot starting (twin dir: {TWIN_DIR})")
     SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
 ```
