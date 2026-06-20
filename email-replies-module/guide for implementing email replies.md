@@ -3,18 +3,14 @@
 **You are Claude Code or Codex (or any coding agent), reading this file inside the user's agent project.** These files are ready-made — don't rebuild the feature from scratch; just install/wire them in as described below. Your
 job: give their agent the ability to **read their unread Gmail and draft replies
 in the agent's own voice**, saved to a local file. This is a Claude Code *skill*
-plus a `/reply` command — it works the same whether their twin is Node or Python
-(it runs inside the Claude session, not in their dispatcher code).
+plus a `/reply` command — it runs inside the Claude session, not in their
+dispatcher code.
 
 Everything you need is embedded below. Follow the steps in order.
 
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. The skill +
-> `/reply` command here are **the same for both languages** (they run inside the
-> Claude session, not in dispatcher code). The stack only matters for the
-> **optional** dispatcher-allowlist step (Step 4), which has a Node and a Python
-> note — apply the one that matches their agent.
+> ## This is for a Node.js twin
+> The skill + `/reply` command here are the same regardless of stack (they run
+> inside the Claude session, not in dispatcher code); we only support Node now.
 
 ---
 
@@ -141,8 +137,8 @@ print these steps and wait for the user to confirm.
 ## Step 4 — If the agent runs unattended through a dispatcher
 
 If the user invokes their agent through a script that calls `claude -p` (e.g. a
-`twin.js` / `twin.py`, or a Slack bot), that dispatcher needs to allow the tools
-this skill uses. Two cases:
+`twin.js`, or a Slack bot), that dispatcher needs to allow the tools this skill
+uses. Two cases:
 
 - **If it already passes `--permission-mode bypassPermissions`** → nothing to do;
   all tools are allowed.
@@ -150,7 +146,7 @@ this skill uses. Two cases:
   run without prompts:
   `mcp__claude_ai_Gmail`, `Skill`, `Read`, `Write`.
 
-  Example (Node): `const ALLOWED = ["mcp__claude_ai_Gmail", "Skill", "Read", "Write"];`
+  Example: `const ALLOWED = ["mcp__claude_ai_Gmail", "Skill", "Read", "Write"];`
 
 If the user only uses the skill by hand in an interactive Claude Code session,
 you can skip this step.

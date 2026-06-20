@@ -12,10 +12,8 @@
 >
 > 1. **Follow `PLAN_OF_ACTION.md`** — the ordered execution checklist (works for
 >    Claude *or* Codex).
-> 2. **Detect the stack** (Node vs Python) and **follow the matching guide** for
->    full code:
->    - Node: `https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory.md`
->    - Python: `https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory%20(python).md`
+> 2. **Follow the guide** for full code (this module is for **Node.js** twins):
+>    - `https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory.md`
 > 3. It installs **engram** (from the fork) + a small `memory` wrapper and wires
 >    `recall → inject → remember` into the twin's dispatch. Voice stays the
 >    user's `CLAUDE.md` / `PERSONA.md` — add no persona of your own.
@@ -37,7 +35,7 @@ no API key.**
   forgets the noise — recall sharpens the longer you run it.
 - **Your voice stays yours.** Memory is additive; personality is still your
   `CLAUDE.md` / `PERSONA.md`.
-- **Node *or* Python.** (Python shells out to the engram CLI.)
+- **Node.js.**
 
 ## How it works
 
@@ -65,17 +63,12 @@ Read this and set up long-term memory for my agent:
 https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory.md
 ```
 
-(Python twin? swap in `guide%20for%20implementing%20memory%20(python).md`.) Or
-just **paste the repo link** and Claude routes itself via the block at the top.
+Or just **paste the repo link** and Claude routes itself via the block at the top.
 
 ## Manual install
 
-1. Install engram from the fork:
-   - Node: `npm install github:luvishg-growthx/engram-memory`
-   - Python: `npm install -g github:luvishg-growthx/engram-memory` (needs Node ≥ 20)
-2. Copy the wrapper into your project root:
-   - Node: [`node/memory.js`](node/memory.js)
-   - Python: [`python/memory.py`](python/memory.py)
+1. Install engram from the fork: `npm install github:luvishg-growthx/engram-memory`
+2. Copy the wrapper into your project root: [`node/memory.js`](node/memory.js)
 3. Wire `recall → inject → remember` into your twin's dispatch (see the guide).
 4. Add `memory/*.db` to `.gitignore`.
 
@@ -90,6 +83,5 @@ this module uses a fork at
 | Path                                         | What it is                                 |
 | -------------------------------------------- | ------------------------------------------ |
 | `PLAN_OF_ACTION.md`                          | Ordered execution checklist (Claude/Codex) |
-| `guide for implementing memory.md`           | Setup guide — **Node** (full code)         |
-| `guide for implementing memory (python).md`  | Setup guide — **Python** (full code)       |
-| `node/memory.js` · `python/memory.py`        | The memory wrapper for each stack          |
+| `guide for implementing memory.md`           | Setup guide — **Node.js** (full code)      |
+| `node/memory.js`                             | The memory wrapper                         |

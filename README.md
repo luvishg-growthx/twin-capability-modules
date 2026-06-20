@@ -3,8 +3,7 @@
 Drop-in **capability modules** for a personal AI twin (the GrowthX Buildathon
 agent). Each module turns a single feature on by pasting a repo link into a
 Claude Code **or** Codex session — the agent installs/wires it in; you don't
-rebuild anything. Every module works whether your twin is **Python or JS** (it
-checks first).
+rebuild anything. All modules are **Node.js**.
 
 This repo bundles all four modules' folders **and** combines every one of their
 README + setup + guide + plan files into this single document, in order.
@@ -47,13 +46,11 @@ README + setup + guide + plan files into this single document, in order.
 >
 > 1. **Follow `PLAN_OF_ACTION.md`** — the ordered execution checklist (works for
 >    Claude *or* Codex). It tells you exactly what to do and links to the code.
-> 2. **Detect the stack** of the twin in the current project: Node (a
->    `twin.js`/`*.js`, `package.json`) or Python (a `twin.py`/`*.py`,
->    `requirements.txt`). If unclear, ask the user one question.
-> 3. **Fetch and follow the matching guide** for the full code and steps:
->    - **Node:** `https://raw.githubusercontent.com/luvishg-growthx/upgrading-your-bot-to-being-a-slack-bot/main/guide%20for%20implementing%20slack.md`
->    - **Python:** `https://raw.githubusercontent.com/luvishg-growthx/upgrading-your-bot-to-being-a-slack-bot/main/guide%20for%20implementing%20slack%20(python).md`
-> 4. The plan + guide tell you to **upgrade `twin.js`/`twin.py` in place** into
+> 2. **Confirm it's a Node.js project** (a `twin.js`/`*.js`, `package.json`).
+>    This module is for Node.js twins.
+> 3. **Fetch and follow the guide** for the full code and steps:
+>    - `https://raw.githubusercontent.com/luvishg-growthx/upgrading-your-bot-to-being-a-slack-bot/main/guide%20for%20implementing%20slack.md`
+> 4. The plan + guide tell you to **upgrade `twin.js` in place** into
 >    the Slack bot (don't create a parallel file), install deps, and walk the
 >    user through creating the Slack app + tokens. Follow them exactly.
 >
@@ -61,8 +58,8 @@ README + setup + guide + plan files into this single document, in order.
 
 ---
 
-**Upgrade your terminal twin into a Slack bot.** Your existing `twin.js` /
-`twin.py` (the one that chats in your terminal via `claude -p`) gets rewritten
+**Upgrade your terminal twin into a Slack bot.** Your existing `twin.js`
+(the one that chats in your terminal via `claude -p`) gets rewritten
 *in place* into a Slack app — same brain, new face. People @mention or DM it in
 Slack, and your twin replies in its own voice — using your `CLAUDE.md` and
 handbook — right inside the thread.
@@ -76,7 +73,7 @@ handbook — right inside the thread.
 - **Sends, edits & deletes too.** Beyond replying, the twin can post, edit,
   delete, and list Slack messages on its own (via `slack-actions` + the
   `slack-message` skill).
-- **Node *or* Python.** Pick whichever your twin is built in.
+- **Node.js.** For Node.js twins.
 
 ## How it works
 
@@ -105,33 +102,22 @@ https://raw.githubusercontent.com/luvishg-growthx/upgrading-your-bot-to-being-a-
 Claude will read the guide, upgrade your `twin.js` into `slack-bot.js`, install
 dependencies, and walk you through creating the Slack app.
 
-**Python twin?** Point the same prompt at the Python guide instead:
-
-```
-Read this file and set up the Slack feature for my twin:
-https://raw.githubusercontent.com/luvishg-growthx/upgrading-your-bot-to-being-a-slack-bot/main/guide%20for%20implementing%20slack%20(python).md
-```
-
 Or just **paste the repo link** and Claude will figure out the rest (see the
 instruction block at the top of this file).
 
 ## Manual install
 
-1. Use the reference bot for your stack as the target shape and rewrite your
+1. Use the reference bot as the target shape and rewrite your
    terminal twin into it:
-   - Node: [`node/slack-bot.js`](node/slack-bot.js) → `slack-bot.js` in your root
-   - Python: [`python/slack_bot.py`](python/slack_bot.py) → `slack_bot.py` in your root
-   - Also copy the actions CLI ([`node/slack-actions.js`](node/slack-actions.js)
-     / [`python/slack_actions.py`](python/slack_actions.py)) +
+   - [`node/slack-bot.js`](node/slack-bot.js) → `slack-bot.js` in your root
+   - Also copy the actions CLI ([`node/slack-actions.js`](node/slack-actions.js)) +
      [`.claude/skills/slack-message/SKILL.md`](.claude/skills/slack-message/SKILL.md)
      for send/edit/delete.
-2. Remove the old terminal `twin.js` / `twin.py` (its logic now lives in the bot).
+2. Remove the old terminal `twin.js` (its logic now lives in the bot).
 3. Create the Slack app and get two tokens — see
    **[`SLACK_APP_SETUP.md`](SLACK_APP_SETUP.md)**.
 4. `cp .env.example .env` and paste your tokens in.
-5. Install deps and run:
-   - Node: `npm install @slack/bolt dotenv && node slack-bot.js`
-   - Python: `pip install slack_bolt python-dotenv && python slack_bot.py`
+5. Install deps and run: `npm install @slack/bolt dotenv && node slack-bot.js`
 6. In Slack, `@mention` the bot or DM it.
 
 ## Files
@@ -139,12 +125,10 @@ instruction block at the top of this file).
 | Path                                       | What it is                                   |
 | ------------------------------------------ | -------------------------------------------- |
 | `PLAN_OF_ACTION.md`                        | Ordered execution checklist (Claude/Codex)   |
-| `guide for implementing slack.md`          | Paste-into-Claude guide — **Node** twin      |
-| `guide for implementing slack (python).md` | Paste-into-Claude guide — **Python** twin    |
+| `guide for implementing slack.md`          | Paste-into-Claude guide — Node.js twin       |
 | `SLACK_APP_SETUP.md`                       | One-time Slack app creation (scopes, tokens) |
 | `.claude/skills/slack-message/SKILL.md`    | Teaches the twin to send/edit/delete/list    |
 | `node/`                                     | Reference Node bot + `slack-actions.js` + env |
-| `python/`                                   | Reference Python bot + `slack_actions.py` + env |
 
 
 ---
@@ -155,17 +139,16 @@ instruction block at the top of this file).
 
 **Audience: the coding agent (Claude Code, Codex, or any similar agent) doing the work.** These files are ready-made — integrate them as-is; don't rebuild the feature.
 This is the ordered execution plan. The full source + token setup lives in the
-guides — open the one for the detected stack and copy code from it:
+guide — open it and copy code from it:
 
-- Node: `guide for implementing slack.md`
-- Python: `guide for implementing slack (python).md`
+- `guide for implementing slack.md`
 
 Work top to bottom. Don't skip steps. Each step has a ✅ done-check.
 
 ---
 
 ## Goal
-Turn the user's existing terminal twin (`twin.js` / `twin.py`, which dispatches
+Turn the user's existing terminal twin (`twin.js`, which dispatches
 `claude -p`) **into a Slack bot, in place** — same brain, new face. End state:
 one bot file, no leftover terminal twin, replies posting into Slack threads in
 the twin's voice, **plus** the twin can send / edit / delete Slack messages on
@@ -182,11 +165,10 @@ its own (Step 8).
 
 ## Steps
 
-### 1. Detect the stack
-- [ ] Node if `package.json` / `*.js` (twin usually `twin.js`).
-- [ ] Python if `requirements.txt`/`pyproject.toml` / `*.py` (twin usually `twin.py`).
-- [ ] If ambiguous, ask the user once. Announce the detected stack.
-- ✅ Done when: you've stated "Detected: Node" or "Detected: Python".
+### 1. Confirm it's a Node.js project
+- [ ] Node.js if `package.json` / `*.js` (twin usually `twin.js`). This module is
+      for Node.js twins.
+- ✅ Done when: you've confirmed it's a Node.js project.
 
 ### 2. Read the existing twin's brain
 - [ ] Open the terminal twin file. Record its `claude -p` invocation: working
@@ -195,21 +177,19 @@ its own (Step 8).
 - ✅ Done when: you can list the exact flags the current twin passes.
 
 ### 3. Write the bot file (upgrade in place)
-- [ ] Create `slack-bot.js` (Node) or `slack_bot.py` (Python) in the project
-      **root**, using the code from the matching guide.
+- [ ] Create `slack-bot.js` in the project **root**, using the code from the guide.
 - [ ] Merge in the custom flags from Step 2 so the Slack twin behaves identically
       to the terminal one.
 - [ ] Confirm `TWIN_DIR` resolves to the project root (where `CLAUDE.md` lives).
 - ✅ Done when: the bot file exists and contains the user's brain logic.
 
 ### 4. Remove the old terminal twin
-- [ ] Delete `twin.js` / `twin.py` (or rename to `*.bak` if the user wants a
+- [ ] Delete `twin.js` (or rename to `*.bak` if the user wants a
       backup). Update any `package.json`/run script that pointed at it.
 - ✅ Done when: only the new bot file remains as the app entry point.
 
 ### 5. Install dependencies
-- [ ] Node: `npm install @slack/bolt dotenv`
-- [ ] Python: `pip install slack_bolt python-dotenv` (and add to `requirements.txt`)
+- [ ] `npm install @slack/bolt dotenv`
 - ✅ Done when: deps install without error.
 
 ### 6. Slack app + tokens (USER does this — you can't)
@@ -222,14 +202,14 @@ its own (Step 8).
 - ✅ Done when: `.env` has both tokens and is ignored by git.
 
 ### 7. Run & verify
-- [ ] Start the bot from the project root (`node slack-bot.js` / `python slack_bot.py`).
+- [ ] Start the bot from the project root (`node slack-bot.js`).
 - [ ] Confirm the startup log prints the bot identity + twin dir.
 - [ ] In Slack, `@mention` the bot; confirm it reacts 👀 and replies in-thread in
       the twin's voice; confirm a follow-up in that thread works without a mention.
 - ✅ Done when: a real Slack message gets a correct in-voice reply.
 
 ### 8. Outbound actions — send / edit / delete messages
-- [ ] Create `slack-actions.js` / `slack_actions.py` (from the guide's Step 6) in
+- [ ] Create `slack-actions.js` (from the guide's Step 6) in
       the project root — a CLI for `send` / `edit` / `delete` / `list`.
 - [ ] Create `.claude/skills/slack-message/SKILL.md` (from the guide) so the twin
       knows it can act on Slack and calls the CLI via Bash.
@@ -264,12 +244,7 @@ Slack bot**: same brain, new face. Do **not** create a second bot file sitting
 awkwardly next to `twin.js`. You are transforming `twin.js` itself into
 `slack-bot.js`.
 
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Node.js guide.** If their agent is **Python**, stop and follow
-> `guide for implementing slack (python).md` instead, so you install the files
-> for the right language.
+> This module is for **Node.js** twins (`package.json` / `*.js`, usually `twin.js`).
 
 ---
 
@@ -655,409 +630,6 @@ When finished, give the user a 3-line summary: that `twin.js` was upgraded into
 
 ---
 
-> 📄 **`slack-twin-module/guide for implementing slack (python).md`**
-
-# Guide: upgrade your twin into a Slack bot (Python)
-
-**You are Claude Code or Codex (or any coding agent), reading this file inside the user's twin project.** These files are ready-made — don't rebuild the feature from scratch; just install/wire them in as described below. The
-user already has a terminal twin — a Python file (usually `twin.py`) that chats
-by dispatching `claude -p`. Your job is to **upgrade that file in place into a
-Slack bot**: same brain, new face. Do **not** create a second bot file sitting
-awkwardly next to `twin.py`. You are transforming `twin.py` itself into
-`slack_bot.py`.
-
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Python guide.** If their agent is **Node.js**, stop and follow
-> `guide for implementing slack.md` instead, so you install the files for the
-> right language.
-
----
-
-## The prompt the user pastes (for reference)
-
-> Read `guide for implementing slack.md` from
-> `https://raw.githubusercontent.com/luvishg-growthx/upgrading-your-bot-to-being-a-slack-bot/main/guide%20for%20implementing%20slack.md`
-> and set up the Slack feature for my twin.
-
-(For a Python twin, point the same prompt at
-`https://raw.githubusercontent.com/luvishg-growthx/upgrading-your-bot-to-being-a-slack-bot/main/guide%20for%20implementing%20slack%20(python).md`
-instead.)
-
----
-
-## What "upgrade in place" means
-
-- **Keep the brain** — the `claude -p` dispatch the user already has: the flags
-  they pass, the project folder it runs in (so it loads their `CLAUDE.md` +
-  handbook/persona), and the session-continuity logic that gives it memory.
-- **Replace the face** — delete the terminal input loop and put a Slack
-  **Socket Mode** app in its place.
-- **One change to the memory model** — instead of ONE global session for the
-  terminal, keep **one Claude session per Slack thread**, so each Slack thread
-  has its own memory.
-- **End state: one file.** The old `twin.py` is gone; `slack_bot.py` is the twin
-  now. No duplicate dispatch logic anywhere.
-
-The result: no API key (uses the logged-in Claude Code session), no public URL
-(Socket Mode), replies posted back into the Slack thread in the twin's voice.
-
----
-
-## Step 0 — Read the existing twin
-
-1. Find the user's terminal twin file. It's usually `twin.py`; if it's named
-   something else (`main.py`, `bot.py`, …), use that.
-2. Read it and note **how it calls `claude -p`** — specifically:
-   - the working directory it runs in (so the persona/handbook loads),
-   - any extra flags it passes (`--allowedTools`, `--model`, etc.),
-   - how it does session continuity (`--session-id` / `--resume`).
-   Carry these into the upgraded file so the Slack twin replies exactly like the
-   terminal twin did.
-3. If you can't find any terminal twin, tell the user — this guide upgrades an
-   existing twin; it assumes one exists.
-
----
-
-## Step 1 — Write `slack_bot.py`
-
-Create `slack_bot.py` in the **project root** (next to `CLAUDE.md`) with the
-content below. This is the canonical shape. **Merge in** any custom flags you
-found in Step 0 (add the user's `--allowedTools` / `--model` to the `args` list)
-so behavior matches their twin.
-
-```python
-"""slack_bot.py — your twin, upgraded from a terminal chat into a Slack app.
-Same brain (claude -p, with memory); new face (Slack). Lives in project root
-next to CLAUDE.md so `claude -p` loads your persona/handbook automatically.
-"""
-
-import os
-import re
-import subprocess
-import uuid
-from pathlib import Path
-
-from dotenv import load_dotenv
-from slack_bolt import App
-from slack_bolt.adapter.socket_mode import SocketModeHandler
-
-load_dotenv()
-
-# Project root (this file's folder) — `claude -p` runs here so it loads your
-# CLAUDE.md + handbook. Override with TWIN_DIR in .env only if needed.
-TWIN_DIR = Path(os.environ.get("TWIN_DIR", Path(__file__).resolve().parent)).resolve()
-CLAUDE_TIMEOUT_S = int(os.environ.get("CLAUDE_TIMEOUT_MS", "300000")) // 1000
-SLACK_CHUNK = 3500  # Slack caps messages near 4000 chars
-
-# One UUID per Slack thread: first msg creates the session, later msgs resume
-# it. Same session-continuity idea your terminal twin used, but keyed per thread.
-_thread_sessions: dict[str, dict] = {}
-
-
-def _session_for(thread_id: str) -> dict:
-    s = _thread_sessions.get(thread_id)
-    if s is None:
-        s = {"id": str(uuid.uuid4()), "started": False}
-        _thread_sessions[thread_id] = s
-    return s
-
-
-# THE BRAIN — carried over from your terminal twin. Add any custom flags your
-# old twin.py passed (e.g. "--allowedTools", ..., "--model", "...") here.
-def ask_twin(thread_id: str, message: str) -> str:
-    session = _session_for(thread_id)
-    session_flag = (
-        ["--resume", session["id"]] if session["started"] else ["--session-id", session["id"]]
-    )
-    session["started"] = True
-    args = [
-        "claude", "-p", message, *session_flag,
-        "--permission-mode", "bypassPermissions",  # unattended bot
-    ]
-    try:
-        result = subprocess.run(
-            args, cwd=str(TWIN_DIR), capture_output=True, text=True, timeout=CLAUDE_TIMEOUT_S
-        )
-    except subprocess.TimeoutExpired:
-        return "(the twin took too long and was stopped)"
-    except FileNotFoundError:
-        return "(couldn't start `claude` — is Claude Code installed and logged in?)"
-    if result.returncode != 0:
-        print("[claude] exit", result.returncode, result.stderr)
-        return "(the twin hit an error — check the bot's logs)"
-    return result.stdout.strip() or "(the twin had nothing to say)"
-
-
-def chunk(text: str) -> list[str]:
-    if len(text) <= SLACK_CHUNK:
-        return [text]
-    parts, buf = [], ""
-    for line in text.split("\n"):
-        if buf and len(buf) + 1 + len(line) > SLACK_CHUNK:
-            parts.append(buf)
-            buf = ""
-        buf = line if not buf else buf + "\n" + line
-    if buf:
-        parts.append(buf)
-    return parts
-
-
-# THE FACE — Slack instead of the terminal input loop.
-app = App(token=os.environ["SLACK_BOT_TOKEN"])
-SELF_USER_ID = app.client.auth_test()["user_id"]
-_MENTION_RE = re.compile(r"<@[A-Z0-9]+>")
-
-
-def _handle(text, channel, thread_id, say, client):
-    clean = _MENTION_RE.sub("", text or "").strip()
-    if not clean:
-        return
-    print(f'[slack] thread={thread_id} msg="{clean[:80]}"')
-    try:
-        client.reactions_add(channel=channel, name="eyes", timestamp=thread_id)
-    except Exception:
-        pass
-    reply = ask_twin(thread_id, clean)
-    for part in chunk(reply):
-        say(text=part, thread_ts=thread_id)
-
-
-@app.event("app_mention")
-def on_mention(event, say, client):
-    thread_id = event.get("thread_ts") or event["ts"]
-    _handle(event.get("text", ""), event["channel"], thread_id, say, client)
-
-
-@app.event("message")
-def on_message(event, say, client):
-    if event.get("bot_id") or event.get("subtype"):
-        return
-    if event.get("user") == SELF_USER_ID:
-        return
-    is_dm = event.get("channel_type") == "im"
-    thread_ts = event.get("thread_ts")
-    thread_id = thread_ts or event["ts"]
-    is_follow_up = bool(thread_ts and thread_ts in _thread_sessions)
-    if not is_dm and not is_follow_up:
-        return
-    _handle(event.get("text", ""), event["channel"], thread_id, say, client)
-
-
-if __name__ == "__main__":
-    # If the cronjobs module is installed, auto-start its scheduler here so
-    # scheduled messages fire even when only the Slack bot runs. No-op otherwise.
-    try:
-        from scheduler import start_scheduler
-        start_scheduler()
-    except Exception:
-        pass
-    print(f"⚡️ Twin Slack bot starting (twin dir: {TWIN_DIR})")
-    SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"]).start()
-```
-
----
-
-## Step 2 — Remove the old terminal twin
-
-The terminal input loop now lives nowhere — its job moved into `slack_bot.py`.
-Delete the old `twin.py` (or, if the user wants a safety copy, rename it to
-`twin.py.bak`). The point is a clean single app, not two files.
-
----
-
-## Step 3 — Dependencies
-
-```
-pip install slack_bolt python-dotenv
-```
-
-Add them to `requirements.txt` (create it if missing):
-
-```
-slack_bolt>=1.18.0
-python-dotenv>=1.0.0
-```
-
----
-
-## Step 4 — Slack app + tokens (have the USER do this)
-
-You (Claude) **cannot** create the Slack app — it needs a human in a browser.
-Print these steps and wait for the user to paste back the two tokens. Socket
-Mode means no public URL is needed.
-
-1. <https://api.slack.com/apps> → **Create New App** → **From scratch**; name
-   it, pick the workspace.
-2. **Socket Mode** → enable. Generate an **App-Level Token** with scope
-   `connections:write`. Copy it → `SLACK_APP_TOKEN` (starts `xapp-`).
-3. **OAuth & Permissions** → **Bot Token Scopes**, add: `app_mentions:read`,
-   `chat:write`, `im:history`, `channels:history`, `groups:history`,
-   `reactions:write`.
-4. **Event Subscriptions** → enable → **Subscribe to bot events**:
-   `app_mention`, `message.im`, `message.channels`, `message.groups`.
-5. **Install App** → **Install to Workspace** → **Allow**. Copy the **Bot User
-   OAuth Token** → `SLACK_BOT_TOKEN` (starts `xoxb-`).
-6. In Slack: `/invite @YourBotName` into a channel (DMs need no invite).
-
-Then create `.env` in the project root (and make sure `.env` is git-ignored):
-
-```
-SLACK_BOT_TOKEN=xoxb-...
-SLACK_APP_TOKEN=xapp-...
-# Optional: TWIN_DIR=/abs/path/to/twin   (default = this project root)
-# Optional: CLAUDE_TIMEOUT_MS=300000
-```
-
----
-
-## Step 5 — Run & verify
-
-1. Confirm Claude Code is installed/logged in: `claude --version`. If it fails,
-   tell the user to install/login first.
-2. Start the bot from the project root: `python slack_bot.py`.
-3. Expect: `⚡️ Twin Slack bot starting (twin dir: …)`.
-4. In Slack, `@mention` the bot in the invited channel (`@YourBot say hi`).
-   Within seconds it should react 👀 and reply in a thread, in the twin's voice.
-   Follow-ups inside that thread don't need another mention.
-
----
-
-## Step 6 — Outbound actions: send / edit / delete messages
-
-The bot above *replies* to people. To also let the twin **send, edit, delete,
-and list** Slack messages on its own (e.g. "post 'standup in 5' to #general",
-"delete that last message"), install the actions CLI + a skill.
-
-**6a. Create `slack_actions.py`** in the project root:
-
-```python
-#!/usr/bin/env python3
-"""slack_actions.py — send / edit / delete / list Slack messages from your agent.
-Uses SLACK_BOT_TOKEN from .env. Slack only lets a bot edit/delete its OWN msgs."""
-import json, os, re, sys, urllib.request
-from pathlib import Path
-from dotenv import load_dotenv
-
-load_dotenv(Path(__file__).resolve().parent / ".env")
-TOKEN = os.environ.get("SLACK_BOT_TOKEN")
-if not TOKEN:
-    print("Missing SLACK_BOT_TOKEN (set it in .env).", file=sys.stderr)
-    sys.exit(1)
-
-
-def slack(method: str, payload: dict) -> dict:
-    req = urllib.request.Request(
-        f"https://slack.com/api/{method}",
-        data=json.dumps(payload).encode(),
-        headers={"Content-Type": "application/json; charset=utf-8", "Authorization": f"Bearer {TOKEN}"},
-    )
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        data = json.loads(resp.read().decode())
-    if not data.get("ok"):
-        raise RuntimeError(f"{method} failed: {data.get('error')}")
-    return data
-
-
-def main() -> None:
-    args = sys.argv[1:]
-    if len(args) < 2:
-        print("usage: python slack_actions.py <send|edit|delete|list> <channel> [...]", file=sys.stderr)
-        sys.exit(1)
-    action, channel, rest = args[0], args[1], args[2:]
-    if action == "send":
-        text = " ".join(rest)
-        if not text:
-            raise RuntimeError("send needs message text")
-        r = slack("chat.postMessage", {"channel": channel, "text": text})
-        print(f"sent ts={r['ts']}")
-    elif action == "edit":
-        if len(rest) < 2:
-            raise RuntimeError("edit needs <ts> <text>")
-        ts, text = rest[0], " ".join(rest[1:])
-        slack("chat.update", {"channel": channel, "ts": ts, "text": text})
-        print(f"edited ts={ts}")
-    elif action == "delete":
-        if not rest:
-            raise RuntimeError("delete needs <ts>")
-        ts = rest[0]
-        slack("chat.delete", {"channel": channel, "ts": ts})
-        print(f"deleted ts={ts}")
-    elif action == "list":
-        limit = int(rest[0]) if rest else 10
-        r = slack("conversations.history", {"channel": channel, "limit": limit})
-        for m in r.get("messages", []):
-            text = re.sub(r"\s+", " ", m.get("text", ""))[:100]
-            print(f"{m.get('ts')} | {m.get('user') or m.get('bot_id') or '?'} | {text}")
-    else:
-        print(f"unknown action: {action}", file=sys.stderr)
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        print(str(e), file=sys.stderr)
-        sys.exit(1)
-```
-
-**6b. Create `.claude/skills/slack-message/SKILL.md`** so the twin knows it has
-these powers and calls the CLI via Bash:
-
-````markdown
----
-name: slack-message
-description: Send, edit, delete, or list Slack messages on the user's behalf. Trigger whenever the user asks to post/send a Slack message, edit/update a message already sent, delete/remove a message, or look up recent messages in a channel.
----
-
-# Act on Slack (send / edit / delete / list)
-
-Use the project's CLI via Bash (Python: `slack_actions.py`). Slack only lets the
-bot **edit/delete messages it posted itself.**
-
-```
-python slack_actions.py send   <channel> <text...>      # prints the ts — save it
-python slack_actions.py edit   <channel> <ts> <text...>
-python slack_actions.py delete <channel> <ts>
-python slack_actions.py list   <channel> [limit]        # "ts | user | text"
-```
-
-`<channel>` = channel ID (`C…`) or user ID (`U…`) for a DM.
-
-- "Send X to <channel>" → `send`, then report the ts.
-- "Edit/delete that message" → reuse the ts from a recent `send`, or `list` the
-  channel to find the bot's message first. Confirm before deleting if ambiguous.
-- Keep wording in the agent's voice unless the user gave exact text.
-````
-
-**6c.** The Slack scopes from Step 4 already cover this (`chat:write` for
-send/edit/delete of the bot's own messages, `*:history` for `list`), so no scope
-change is needed. The twin runs with `bypassPermissions`, so it can call the CLI
-via Bash.
-
----
-
-## Guardrails (do these, quietly)
-
-- **Upgrade in place — don't duplicate.** End with one app file (`slack_bot.py`)
-  and no leftover terminal twin running its own `claude -p`.
-- **Preserve the brain.** Carry over the user's existing `claude -p` flags and
-  working directory so the Slack twin answers exactly like the terminal one.
-- **Don't touch** `CLAUDE.md`, the persona/handbook, or other source — the
-  personality stays 100% the user's. This bot adds no voice of its own.
-- **Never print or commit token values.** Ensure `.env` is git-ignored.
-- If `claude -p` isn't found at runtime, it's almost always Claude Code not being
-  installed / on PATH for the shell that launched the bot.
-
-When finished, give the user a 3-line summary: that `twin.py` was upgraded into
-`slack_bot.py`, that you added send/edit/delete via `slack_actions.py` + the
-`slack-message` skill, and the exact command to start the bot.
-
-
----
-
 > 📄 **`slack-twin-module/SLACK_APP_SETUP.md`**
 
 # Create your Slack app (one-time, ~3 minutes)
@@ -1156,10 +728,8 @@ That's it. Start the bot, then `@mention` it in the channel or DM it.
 > to **read their unread Gmail and draft replies in the agent's own voice**. Do
 > this:
 >
-> 1. **Confirm the stack first** — check whether the user's agent is Node.js
->    (`package.json`/`*.js`) or Python (`requirements.txt`/`*.py`). The skill +
->    `/reply` files here are identical for both; only the optional
->    dispatcher-allowlist step differs (Node vs Python).
+> 1. **This is for a Node.js twin.** The skill + `/reply` files here are the same
+>    regardless of stack; we only support Node now.
 > 2. **Follow `PLAN_OF_ACTION.md`** — the ordered execution checklist (works for
 >    Claude *or* Codex). It links to the guide below for the full code.
 > 2. **Fetch and follow the setup guide** end-to-end — it has the full skill +
@@ -1185,8 +755,8 @@ draft replies" and it reads your **unread** Gmail, drafts a reply to each one
 - **Read-only by design.** Never sends, never marks mail as read. It only drafts.
 - **Your voice.** Drafts follow your `CLAUDE.md` / `PERSONA.md` — neutral module,
   your personality.
-- **Runtime-agnostic.** Works whether your twin is Node or Python (it's a Claude
-  Code skill, not dispatcher code).
+- **Node.js twin.** It's a Claude Code skill, not dispatcher code, so it drops
+  into your Node twin cleanly.
 
 ## How it works
 
@@ -1266,12 +836,10 @@ Gmail connected, verified on the real inbox.
 
 ## Steps
 
-### 0. Confirm the stack
-- [ ] Check whether the user's agent is **Node.js** (`package.json`/`*.js`) or
-      **Python** (`requirements.txt`/`*.py`); ask if unclear. The skill +
-      `/reply` files are identical for both — the stack only matters for the
-      optional dispatcher-allowlist step (Step 4).
-- ✅ Done when: stack noted.
+### 0. Node.js twin
+- [ ] This is for a **Node.js** twin. The skill + `/reply` files are the same
+      regardless of stack; we only support Node now.
+- ✅ Done when: noted.
 
 ### 1. Install the skill
 - [ ] Create `.claude/skills/email-replies/SKILL.md` (create folders as needed)
@@ -1292,10 +860,10 @@ Gmail connected, verified on the real inbox.
 - ✅ Done when: the user confirms the connector is connected.
 
 ### 4. Dispatcher tool access (only if run unattended)
-- [ ] If the agent is invoked via a `claude -p` script (`twin.js`/`twin.py`/Slack
-      bot): if it uses `--permission-mode bypassPermissions`, do nothing. If it
-      uses an `--allowedTools` list, add: `mcp__claude_ai_Gmail`, `Skill`,
-      `Read`, `Write`.
+- [ ] If the agent is invoked via a `claude -p` script (`twin.js`/Slack bot): if
+      it uses `--permission-mode bypassPermissions`, do nothing. If it uses an
+      `--allowedTools` list, add: `mcp__claude_ai_Gmail`, `Skill`, `Read`,
+      `Write`.
 - [ ] If the user only runs the skill interactively, skip this step.
 - ✅ Done when: the dispatcher (if any) can use Gmail + Skill + Read/Write.
 
@@ -1337,18 +905,14 @@ Gmail connected, verified on the real inbox.
 **You are Claude Code or Codex (or any coding agent), reading this file inside the user's agent project.** These files are ready-made — don't rebuild the feature from scratch; just install/wire them in as described below. Your
 job: give their agent the ability to **read their unread Gmail and draft replies
 in the agent's own voice**, saved to a local file. This is a Claude Code *skill*
-plus a `/reply` command — it works the same whether their twin is Node or Python
-(it runs inside the Claude session, not in their dispatcher code).
+plus a `/reply` command — it runs inside the Claude session, not in their
+dispatcher code.
 
 Everything you need is embedded below. Follow the steps in order.
 
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. The skill +
-> `/reply` command here are **the same for both languages** (they run inside the
-> Claude session, not in dispatcher code). The stack only matters for the
-> **optional** dispatcher-allowlist step (Step 4), which has a Node and a Python
-> note — apply the one that matches their agent.
+> ## This is for a Node.js twin
+> The skill + `/reply` command here are the same regardless of stack (they run
+> inside the Claude session, not in dispatcher code); we only support Node now.
 
 ---
 
@@ -1475,8 +1039,8 @@ print these steps and wait for the user to confirm.
 ## Step 4 — If the agent runs unattended through a dispatcher
 
 If the user invokes their agent through a script that calls `claude -p` (e.g. a
-`twin.js` / `twin.py`, or a Slack bot), that dispatcher needs to allow the tools
-this skill uses. Two cases:
+`twin.js`, or a Slack bot), that dispatcher needs to allow the tools this skill
+uses. Two cases:
 
 - **If it already passes `--permission-mode bypassPermissions`** → nothing to do;
   all tools are allowed.
@@ -1484,7 +1048,7 @@ this skill uses. Two cases:
   run without prompts:
   `mcp__claude_ai_Gmail`, `Skill`, `Read`, `Write`.
 
-  Example (Node): `const ALLOWED = ["mcp__claude_ai_Gmail", "Skill", "Read", "Write"];`
+  Example: `const ALLOWED = ["mcp__claude_ai_Gmail", "Skill", "Read", "Write"];`
 
 If the user only uses the skill by hand in an interactive Claude Code session,
 you can skip this step.
@@ -1594,10 +1158,8 @@ a fresh Claude Code session.
 >
 > 1. **Follow `PLAN_OF_ACTION.md`** — the ordered execution checklist (works for
 >    Claude *or* Codex).
-> 2. **Detect the stack** (Node vs Python) and **follow the matching guide** for
->    full code:
->    - Node: `https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs.md`
->    - Python: `https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs%20(python).md`
+> 2. **Follow the guide** for full code (this module is for **Node.js** twins):
+>    - `https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs.md`
 > 3. It installs a `schedule-task` skill (the agent records jobs) + a scheduler
 >    daemon (fires them). Voice stays the user's `CLAUDE.md` / `PERSONA.md` —
 >    add no persona of your own.
@@ -1619,7 +1181,7 @@ running your twin so the message is in your agent's voice — and delivers it.
   literal text.
 - **Delivery:** console + macOS notification out of the box; Slack too if you set
   a bot token + channel (reuse the Slack module's token).
-- **Node *or* Python.**
+- **Node.js.**
 
 ## How it works
 
@@ -1648,18 +1210,15 @@ Read this and set up scheduled tasks / cronjobs for my agent:
 https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs.md
 ```
 
-(Python twin? swap in `guide%20for%20implementing%20cronjobs%20(python).md`.) Or
-just **paste the repo link** and Claude routes itself via the block at the top.
+Or just **paste the repo link** and Claude routes itself via the block at the top.
 
 ## Manual install
 
-1. Copy the scheduler for your stack into your project root:
-   - Node: [`node/scheduler.js`](node/scheduler.js) (+ `npm install dotenv`)
-   - Python: [`python/scheduler.py`](python/scheduler.py) (+ `pip install python-dotenv`)
+1. Copy [`node/scheduler.js`](node/scheduler.js) into your project root (+ `npm install dotenv`).
 2. Copy [`.claude/skills/schedule-task/SKILL.md`](.claude/skills/schedule-task/SKILL.md)
    into your project's `.claude/`.
 3. (Optional) Set `SLACK_BOT_TOKEN` + `SLACK_CHANNEL` in `.env` for Slack delivery.
-4. Start the daemon: `node scheduler.js` / `python scheduler.py` (keep it running).
+4. Start the daemon: `node scheduler.js` (keep it running).
 5. Ask your agent to schedule something.
 
 ## Files
@@ -1667,10 +1226,9 @@ just **paste the repo link** and Claude routes itself via the block at the top.
 | Path                                          | What it is                                  |
 | --------------------------------------------- | ------------------------------------------- |
 | `PLAN_OF_ACTION.md`                           | Ordered execution checklist (Claude/Codex)  |
-| `guide for implementing cronjobs.md`          | Setup guide — **Node** (full code)          |
-| `guide for implementing cronjobs (python).md` | Setup guide — **Python** (full code)        |
+| `guide for implementing cronjobs.md`          | Setup guide — **Node.js** (full code)       |
 | `.claude/skills/schedule-task/SKILL.md`       | Skill that records jobs (runs the CLI)      |
-| `node/` · `python/`                           | `scheduler` (engine, auto-start) + `schedule` (CLI) + env + samples |
+| `node/`                                        | `scheduler` (engine, auto-start) + `schedule` (CLI) + env + samples |
 
 
 ---
@@ -1680,11 +1238,9 @@ just **paste the repo link** and Claude routes itself via the block at the top.
 # Plan of action — add cronjobs / scheduled messages to this agent
 
 **Audience: the coding agent (Claude Code, Codex, or any similar agent) doing the work.** These files are ready-made — integrate them as-is; don't rebuild the feature.
-Ordered execution plan. Full source is in the guides — open the one for the
-detected stack and copy code from it:
+Ordered execution plan. Full source is in the Node.js guide — copy code from it:
 
-- Node: `guide for implementing cronjobs.md`
-- Python: `guide for implementing cronjobs (python).md`
+- `guide for implementing cronjobs.md`
 
 **The whole point: make it automatic. Install deps, write files, AND wire the
 scheduler to auto-start inside the twin. The user must NOT have to run a separate
@@ -1699,63 +1255,57 @@ job via a CLI, and a scheduler that auto-starts inside the twin fires it on time
 
 ## Preconditions
 - [ ] Inside the user's agent project (a `CLAUDE.md` / persona is present).
-- [ ] `claude --version` works. Node ≥ 18 (Node twin) or Python 3 (Python twin).
+- [ ] `claude --version` works. Node ≥ 18.
 
 ---
 
 ## Steps
 
-### 1. Detect the stack
-- [ ] Node (`package.json`/`*.js`) or Python (`requirements.txt`/`*.py`). Ask
-      once if unclear. Announce it.
-- ✅ Done when: stack stated.
-
-### 2. Install the dependency
-- [ ] Node: `npm install dotenv`. Python: `pip install python-dotenv`.
+### 1. Install the dependency
+- [ ] `npm install dotenv`.
 - ✅ Done when: installed.
 
-### 3. Create the job-creator CLI
-- [ ] `schedule.js` (Node) or `schedule.py` (Python) in the project root, from
-      the guide. This is what the skill runs to record jobs reliably.
+### 2. Create the job-creator CLI
+- [ ] `schedule.js` in the project root, from the guide. This is what the skill
+      runs to record jobs reliably.
 - ✅ Done when: `node schedule.js --at "2020-01-01T00:00:00" --message test`
       writes a job to `data/jobs.json`.
 
-### 4. Create the scheduler engine
-- [ ] `scheduler.js` / `scheduler.py` in the project root, from the guide. It
-      exports `startScheduler()` / `start_scheduler()`.
+### 3. Create the scheduler engine
+- [ ] `scheduler.js` in the project root, from the guide. It exports
+      `startScheduler()`.
 - ✅ Done when: the file exists and exports the start function.
 
-### 5. AUTO-START it inside the twin  ← the critical step
+### 4. AUTO-START it inside the twin  ← the critical step
 - [ ] Find the twin's startup (terminal chat `main()` / readline, or the bot
       start) and add the start call so the scheduler runs in the same process:
-      - Node: `require("./scheduler.js").startScheduler();`
-      - Python: `from scheduler import start_scheduler; start_scheduler()`
+      - `require("./scheduler.js").startScheduler();`
 - [ ] Only if there's truly no editable entry point: fall back to telling the
       user to run the scheduler standalone — but prefer wiring it in.
 - ✅ Done when: starting the twin prints `⏰ Scheduler active …` (no separate
       process needed).
 
-### 5b. Make sure the twin can RUN the schedule command (critical)
-- [ ] The skill runs `schedule.js`/`schedule.py` via **Bash**. If the twin's
+### 4b. Make sure the twin can RUN the schedule command (critical)
+- [ ] The skill runs `schedule.js` via **Bash**. If the twin's
       `claude -p` dispatch can't use Bash, the command is blocked and the twin
       will falsely claim it "needs approval" → scheduling silently fails.
 - [ ] If the dispatch uses `--permission-mode bypassPermissions` → fine. If it
       uses an `--allowedTools` allowlist → add `Bash` (and `Skill`).
 - ✅ Done when: the twin can run a Bash command without an approval prompt.
 
-### 6. Install the schedule-task skill
+### 5. Install the schedule-task skill
 - [ ] `.claude/skills/schedule-task/SKILL.md` from the guide — it tells the twin
       to run the `schedule` CLI (never hand-edit JSON).
 - ✅ Done when: the skill file exists with correct frontmatter.
 
-### 7. Ignore runtime state & verify end-to-end
+### 6. Ignore runtime state & verify end-to-end
 - [ ] Add `data/jobs.json` + `.env` to `.gitignore`.
 - [ ] Ask the twin "send me a hi message in 2 minutes". Confirm a job lands in
       `data/jobs.json`, and ~2 min later the scheduler logs `[fire] …` + a
       notification — with no second process running.
 - ✅ Done when: a scheduled message fires from the twin alone.
 
-### 8. Report
+### 7. Report
 - [ ] 3-line summary: files added, that the scheduler auto-starts with the twin,
       an example phrase to try.
 
@@ -1780,11 +1330,7 @@ job: let their agent **schedule future and recurring messages** — "send me a h
 message at 7:30pm", "remind me every weekday at 9am" — and have it **just work**
 with no manual steps. Everything you need is embedded.
 
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Node.js guide.** If their agent is **Python**, stop and follow
-> `guide for implementing cronjobs (python).md` instead.
+> This module is for **Node.js** twins.
 
 **Do all of this for the user — install deps, write files, AND wire the scheduler
 to auto-start. Don't leave them a separate process to run.**
@@ -2048,362 +1594,6 @@ When done, summarize in 3 lines: files added, that the scheduler auto-starts wit
 the twin, and an example phrase to try.
 
 
----
-
-> 📄 **`cronjobs-module/guide for implementing cronjobs (python).md`**
-
-# Guide: add cronjobs / scheduled messages to your agent (Python)
-
-**You are Claude Code or Codex (or any coding agent), reading this file inside the user's agent project.** These files are ready-made — don't rebuild the feature from scratch; just install/wire them in as described below. Your
-job: let their agent **schedule future and recurring messages** — "send me a hi
-message at 7:30pm", "remind me every weekday at 9am" — and have it **just work**
-with no manual steps. Everything you need is embedded.
-
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Python guide.** If their agent is **Node.js**, stop and follow
-> `guide for implementing cronjobs.md` instead.
-
-**Do all of this for the user — install deps, write files, AND wire the scheduler
-to auto-start. Don't leave them a separate process to run.**
-
----
-
-## The prompt the user pastes (for reference)
-
-> Read `guide for implementing cronjobs.md` from
-> `https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs.md`
-> and set up scheduled tasks / cronjobs for my agent.
-
-(For a Python twin, point the same prompt at
-`https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs%20(python).md`.)
-
----
-
-## How it works (no manual steps)
-
-- The agent **creates** a job by running `schedule.py` (a deterministic CLI) when
-  the user asks — scheduling never depends on the model hand-editing JSON.
-- The **scheduler auto-starts inside the twin** in a background thread (you wire
-  `start_scheduler()` into the twin's startup), so jobs fire in the same process
-  — no second terminal.
-- A `prompt` job runs the twin (`claude -p`, in the user's voice); a `message`
-  job sends literal text. Delivery = desktop notification + console, and Slack if
-  a token + channel are set.
-
----
-
-## Step 1 — Dependency
-
-```
-pip install python-dotenv
-```
-
-(Add `python-dotenv>=1.0.0` to `requirements.txt`.)
-
----
-
-## Step 2 — Create `schedule.py` (the job-creator CLI)
-
-Create `schedule.py` in the project **root**:
-
-```python
-"""schedule.py — deterministically add a job to data/jobs.json."""
-import json, os, sys, uuid
-from pathlib import Path
-
-JOBS_FILE = Path(os.environ.get("JOBS_FILE", Path(__file__).resolve().parent / "data" / "jobs.json"))
-
-
-def parse_args(argv):
-    flags, i = {}, 0
-    while i < len(argv):
-        a = argv[i]
-        if a.startswith("--"):
-            key = a[2:]
-            nxt = argv[i + 1] if i + 1 < len(argv) else None
-            if nxt is None or nxt.startswith("--"):
-                flags[key] = True
-            else:
-                flags[key] = nxt; i += 1
-        i += 1
-    return flags
-
-
-flags = parse_args(sys.argv[1:])
-if not flags.get("at") and not flags.get("cron"):
-    print('Need --at "<ISO local time>" or --cron "<expr>".', file=sys.stderr); sys.exit(1)
-if not flags.get("message") and not flags.get("prompt"):
-    print("Need --message <text> or --prompt <instruction>.", file=sys.stderr); sys.exit(1)
-
-job = {
-    "id": uuid.uuid4().hex[:8],
-    "title": flags.get("title") or (str(flags["message"])[:40] if flags.get("message") else "scheduled task"),
-    "status": "pending", "lastRun": None,
-}
-for k in ("at", "cron", "prompt", "message", "channel"):
-    if flags.get(k):
-        job["runAt" if k == "at" else k] = str(flags[k])
-
-JOBS_FILE.parent.mkdir(parents=True, exist_ok=True)
-jobs = []
-try:
-    raw = JOBS_FILE.read_text().strip()
-    if raw: jobs = json.loads(raw)
-    if not isinstance(jobs, list): jobs = []
-except Exception:
-    jobs = []
-jobs.append(job)
-JOBS_FILE.write_text(json.dumps(jobs, indent=2))
-where = f'at {job["runAt"]}' if job.get("runAt") else f'on cron "{job["cron"]}"'
-print(f'scheduled "{job["title"]}" {where} (id {job["id"]})')
-```
-
----
-
-## Step 3 — Create `scheduler.py` (the engine, auto-startable)
-
-Create `scheduler.py` in the project **root**:
-
-```python
-"""scheduler.py — fires due jobs. Wired into the twin's startup (Step 4) via
-start_scheduler() (background thread); can also run standalone."""
-import json, os, subprocess, threading, time, urllib.request
-from datetime import datetime
-from pathlib import Path
-from dotenv import load_dotenv
-
-load_dotenv()
-TWIN_DIR = Path(os.environ.get("TWIN_DIR", Path(__file__).resolve().parent)).resolve()
-JOBS_FILE = Path(os.environ.get("JOBS_FILE", Path(__file__).resolve().parent / "data" / "jobs.json"))
-POLL_S = max(2, int(os.environ.get("POLL_MS", "30000")) // 1000)
-SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
-SLACK_CHANNEL = os.environ.get("SLACK_CHANNEL")
-
-
-def load_jobs():
-    try:
-        raw = JOBS_FILE.read_text().strip()
-        if not raw: return []
-        d = json.loads(raw); return d if isinstance(d, list) else []
-    except Exception:
-        return []
-
-
-def save_jobs(jobs):
-    JOBS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    tmp = JOBS_FILE.with_suffix(".tmp"); tmp.write_text(json.dumps(jobs, indent=2)); tmp.replace(JOBS_FILE)
-
-
-def _field_match(field, value):
-    if field == "*": return True
-    for part in field.split(","):
-        if "/" in part:
-            rng, s = part.split("/"); step = int(s)
-            if rng == "*":
-                if step and value % step == 0: return True
-            else:
-                base = int(rng)
-                if value >= base and step and (value - base) % step == 0: return True
-        elif "-" in part:
-            a, b = (int(x) for x in part.split("-"))
-            if a <= value <= b: return True
-        elif int(part) == value:
-            return True
-    return False
-
-
-def cron_matches(expr, d):
-    p = expr.strip().split()
-    if len(p) != 5: return False
-    cron_dow = (d.weekday() + 1) % 7
-    return (_field_match(p[0], d.minute) and _field_match(p[1], d.hour) and _field_match(p[2], d.day)
-            and _field_match(p[3], d.month) and _field_match(p[4], cron_dow))
-
-
-def minute_key(d): return d.strftime("%Y-%m-%dT%H:%M")
-
-
-def is_due(job, now):
-    if job.get("status") == "done": return False
-    if job.get("runAt"):
-        try: return datetime.fromisoformat(job["runAt"]) <= now
-        except ValueError: return False
-    if job.get("cron"): return cron_matches(job["cron"], now) and job.get("lastRun") != minute_key(now)
-    return False
-
-
-def run_twin(prompt):
-    try:
-        res = subprocess.run(["claude", "-p", prompt, "--permission-mode", "bypassPermissions"],
-                             cwd=str(TWIN_DIR), capture_output=True, text=True)
-    except FileNotFoundError:
-        return "(couldn't start `claude` — is Claude Code installed and logged in?)"
-    if res.returncode != 0: return f"(twin error: {(res.stderr or 'unknown').strip()})"
-    return res.stdout.strip()
-
-
-def deliver(text, job):
-    title = job.get("title", "reminder")
-    print(f"\n\n⏰ twin (scheduled — {title}) ›\n{text}\n")
-    try:
-        safe = text.replace('"', '\\"'); st = f"Agent: {title}".replace('"', '\\"')
-        subprocess.run(["osascript", "-e", f'display notification "{safe}" with title "{st}"'], check=False)
-    except Exception:
-        pass
-    channel = job.get("channel") or SLACK_CHANNEL
-    if SLACK_BOT_TOKEN and channel:
-        try:
-            req = urllib.request.Request("https://slack.com/api/chat.postMessage",
-                data=json.dumps({"channel": channel, "text": text}).encode(),
-                headers={"Content-Type": "application/json", "Authorization": f"Bearer {SLACK_BOT_TOKEN}"})
-            urllib.request.urlopen(req, timeout=10)
-        except Exception as e:
-            print(f"[slack] post failed: {e}")
-
-
-def run_job(job):
-    text = run_twin(job["prompt"]) if job.get("prompt") else job.get("message", "(empty job)")
-    deliver(text, job)
-
-
-def tick():
-    jobs = load_jobs(); now = datetime.now(); changed = False
-    for job in jobs:
-        if not is_due(job, now): continue
-        run_job(job); job["lastRun"] = minute_key(now)
-        if job.get("runAt"): job["status"] = "done"
-        changed = True
-    if changed: save_jobs(jobs)
-
-
-_started = False
-
-
-def _loop():
-    while True:
-        try: tick()
-        except Exception as e: print(f"[tick] error: {e}")
-        time.sleep(POLL_S)
-
-
-def start_scheduler():
-    """Start the loop in a background daemon thread. Call once from the twin's startup."""
-    global _started
-    if _started: return
-    _started = True
-    print(f"⏰ Scheduler active (checks every {POLL_S}s).")
-    threading.Thread(target=_loop, daemon=True).start()
-
-
-if __name__ == "__main__":
-    print(f"⏰ Scheduler running standalone. Jobs: {JOBS_FILE}")
-    while True:
-        try: tick()
-        except Exception as e: print(f"[tick] error: {e}")
-        time.sleep(POLL_S)
-```
-
----
-
-## Step 4 — AUTO-START it inside the twin (the important bit)
-
-Find the twin's entry point — where it starts the chat loop (e.g. `if __name__
-== "__main__":` / the `while True: input(...)` in `twin.py`). Add, before the
-loop starts:
-
-```python
-from scheduler import start_scheduler
-start_scheduler()
-```
-
-Now `python twin.py` runs the chat **and** the scheduler thread together — the
-user never starts a second process.
-
-> If there's truly no editable entry point, fall back to telling the user to run
-> `python scheduler.py` in a second terminal — but prefer wiring it in.
-
----
-
-## Step 4b — Make sure the twin can RUN the schedule command (critical)
-
-The skill schedules by running `python schedule.py` via **Bash**. If the twin's
-`claude -p` dispatch can't use Bash, that command is **blocked** — the twin will
-then claim it "needs approval" and silently fail to schedule. Prevent this:
-
-- If the twin's dispatch uses `--permission-mode bypassPermissions` → you're done.
-- If it uses an `--allowedTools` allowlist → **add `Bash`** (and `Skill`) to it.
-
-This is the #1 cause of "I scheduled it but nothing happened." The twin must
-*actually run* the command, never ask the user to approve it.
-
-## Step 5 — Install the schedule-task skill
-
-Create `.claude/skills/schedule-task/SKILL.md`:
-
-````markdown
----
-name: schedule-task
-description: Schedule a future or recurring message/task for the user (e.g. "send me a hi message at 2:30pm tomorrow", "remind me every weekday at 9am"). Trigger whenever the user asks to schedule, remind, or send something at a later time or on a repeating schedule.
----
-
-# Schedule a task
-
-When the user asks to schedule/remind/send something later, you MUST record the
-job by running the `schedule.py` CLI via Bash. Don't just say "I'll remind you" —
-if you don't run the command, nothing is scheduled. The scheduler runs inside the
-twin and fires the job at its time.
-
-## Step 1 — current time
-Run: `date "+%Y-%m-%dT%H:%M:%S"`
-
-## Step 2 — work out the time
-- "at 7:30" / "7:30pm" → today (or tomorrow if already past) at `19:30:00`.
-- "in 10 minutes" → now + 10 min. Use 24-hour local ISO, no timezone suffix.
-- Recurring → 5-field cron: `minute hour day-of-month month day-of-week`
-  (day-of-week 0=Sun..6=Sat). Every weekday 9am → `0 9 * * 1-5`.
-
-## Step 3 — run the CLI (the actual scheduling)
-```
-python schedule.py --at "2026-06-20T19:30:00" --prompt "Write a short, friendly hi message." --title "hi message"
-python schedule.py --at "2026-06-20T19:30:00" --message "Don't forget the call." --title "call reminder"
-python schedule.py --cron "0 9 * * 1-5" --message "Standup in 30 minutes."
-```
-
-## Step 4 — confirm
-Report what you scheduled. The scheduler is already running inside the twin, so it
-fires automatically — no separate process. Delivery = desktop notification (plus
-Slack if SLACK_BOT_TOKEN + SLACK_CHANNEL are set).
-````
-
----
-
-## Step 6 — Ignore runtime state, restart, & verify
-
-1. Add `data/jobs.json` and `.env` to `.gitignore`.
-2. **Restart the twin** so the running process picks up the new code (a twin
-   started before this change won't have the scheduler or Bash permission).
-3. End-to-end check: ask the twin "send me a hi message in 2 minutes". Confirm a
-   job appears in `data/jobs.json`, and ~2 min later the scheduled message prints
-   in the terminal + a notification. No second process needed, and the twin must
-   NOT ask you to approve anything.
-
----
-
-## Guardrails (do these, quietly)
-
-- **Make it automatic.** Wire `start_scheduler()` into the twin's startup; never
-  leave the user to run a separate scheduler.
-- The skill **must run `schedule.py`** (deterministic) — never hand-edit JSON.
-- One-shot = `runAt`; recurring = `cron`. Never both. Never both `prompt` and
-  `message`. Times are local (no timezone suffix).
-- Don't touch `CLAUDE.md` / persona — the voice stays the user's.
-
-When done, summarize in 3 lines: files added, that the scheduler auto-starts with
-the twin, and an example phrase to try.
-
-
 <br>
 
 # ═══ 🧠 LONG-TERM MEMORY (ENGRAM) MODULE ═══
@@ -2427,10 +1617,8 @@ the twin, and an example phrase to try.
 >
 > 1. **Follow `PLAN_OF_ACTION.md`** — the ordered execution checklist (works for
 >    Claude *or* Codex).
-> 2. **Detect the stack** (Node vs Python) and **follow the matching guide** for
->    full code:
->    - Node: `https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory.md`
->    - Python: `https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory%20(python).md`
+> 2. **Follow the guide** for full code (this module is for **Node.js** twins):
+>    - `https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory.md`
 > 3. It installs **engram** (from the fork) + a small `memory` wrapper and wires
 >    `recall → inject → remember` into the twin's dispatch. Voice stays the
 >    user's `CLAUDE.md` / `PERSONA.md` — add no persona of your own.
@@ -2452,7 +1640,7 @@ no API key.**
   forgets the noise — recall sharpens the longer you run it.
 - **Your voice stays yours.** Memory is additive; personality is still your
   `CLAUDE.md` / `PERSONA.md`.
-- **Node *or* Python.** (Python shells out to the engram CLI.)
+- **Node.js.**
 
 ## How it works
 
@@ -2480,17 +1668,12 @@ Read this and set up long-term memory for my agent:
 https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory.md
 ```
 
-(Python twin? swap in `guide%20for%20implementing%20memory%20(python).md`.) Or
-just **paste the repo link** and Claude routes itself via the block at the top.
+Or just **paste the repo link** and Claude routes itself via the block at the top.
 
 ## Manual install
 
-1. Install engram from the fork:
-   - Node: `npm install github:luvishg-growthx/engram-memory`
-   - Python: `npm install -g github:luvishg-growthx/engram-memory` (needs Node ≥ 20)
-2. Copy the wrapper into your project root:
-   - Node: [`node/memory.js`](node/memory.js)
-   - Python: [`python/memory.py`](python/memory.py)
+1. Install engram from the fork: `npm install github:luvishg-growthx/engram-memory`
+2. Copy the wrapper into your project root: [`node/memory.js`](node/memory.js)
 3. Wire `recall → inject → remember` into your twin's dispatch (see the guide).
 4. Add `memory/*.db` to `.gitignore`.
 
@@ -2505,9 +1688,8 @@ this module uses a fork at
 | Path                                         | What it is                                 |
 | -------------------------------------------- | ------------------------------------------ |
 | `PLAN_OF_ACTION.md`                          | Ordered execution checklist (Claude/Codex) |
-| `guide for implementing memory.md`           | Setup guide — **Node** (full code)         |
-| `guide for implementing memory (python).md`  | Setup guide — **Python** (full code)       |
-| `node/memory.js` · `python/memory.py`        | The memory wrapper for each stack          |
+| `guide for implementing memory.md`           | Setup guide — **Node.js** (full code)      |
+| `node/memory.js`                             | The memory wrapper                         |
 
 
 ---
@@ -2517,11 +1699,10 @@ this module uses a fork at
 # Plan of action — give this agent long-term memory (engram)
 
 **Audience: the coding agent (Claude Code, Codex, or any similar agent) doing the work.** These files are ready-made — integrate them as-is; don't rebuild the feature.
-Ordered execution plan. Full source is in the guides — open the one for the
-detected stack and copy code from it:
+Ordered execution plan. Full source is in the guide — open it and copy code
+from it (this module is for **Node.js** twins):
 
-- Node: `guide for implementing memory.md`
-- Python: `guide for implementing memory (python).md`
+- `guide for implementing memory.md`
 
 Work top to bottom. Each step has a ✅ done-check.
 
@@ -2534,34 +1715,29 @@ making it self-improving. Voice stays the user's `CLAUDE.md` / `PERSONA.md`.
 
 ## Preconditions
 - [ ] Inside the user's agent project (a `CLAUDE.md` / persona is present).
-- [ ] **Node ≥ 20** (`node --version`) — engram's CLI needs it even for Python twins.
+- [ ] **Node ≥ 20** (`node --version`) — engram's CLI needs it.
 - [ ] `claude --version` works.
 
 ---
 
 ## Steps
 
-### 1. Detect the stack
-- [ ] Node (`package.json`/`*.js`) or Python (`requirements.txt`/`*.py`). Ask
-      once if unclear. Announce it.
-- ✅ Done when: stack stated.
+### 1. Confirm Node.js
+- [ ] This module is for Node.js twins (`package.json`/`*.js`).
+- ✅ Done when: confirmed Node.js project.
 
 ### 2. Install engram (from the fork)
-- [ ] Node: `npm install github:luvishg-growthx/engram-memory` (local bin at
+- [ ] `npm install github:luvishg-growthx/engram-memory` (local bin at
       `node_modules/.bin/engram`).
-- [ ] Python: `npm install -g github:luvishg-growthx/engram-memory` (global
-      `engram` on PATH). Confirm with `engram help`.
 - ✅ Done when: the `engram` CLI runs.
 
 ### 3. Add the memory wrapper
-- [ ] Create `memory.js` (Node) or `memory.py` (Python) in the project root,
-      using the code from the matching guide.
+- [ ] Create `memory.js` in the project root, using the code from the guide.
 - ✅ Done when: the wrapper file exists.
 
 ### 4. Wire it into the twin's dispatch
 - [ ] Find where the twin calls `claude -p` (e.g. `ask()`).
-- [ ] **Before** the call: `recallContext`/`recall_context(message)` → prepend to
-      the prompt.
+- [ ] **Before** the call: `recallContext(message)` → prepend to the prompt.
 - [ ] **After** the reply: `remember(...)` the turn.
 - [ ] If the twin has multiple faces (terminal, Slack), wire into the **shared**
       dispatch so all faces get memory. Keep edits additive — don't rewrite.
@@ -2604,11 +1780,7 @@ associative-memory layer, backed by one SQLite file, no API keys). After this,
 the twin recalls relevant past memories before each turn and writes new ones
 after — so it gets sharper the longer it runs. Everything you need is embedded.
 
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Node.js guide.** If their agent is **Python**, stop and follow
-> `guide for implementing memory (python).md` instead.
+> **This module is for Node.js twins** (`package.json` / `*.js`).
 
 ---
 
@@ -2644,8 +1816,7 @@ user's `CLAUDE.md` / `PERSONA.md`; memory just gives it recall.
 
 ## Step 0 — Prerequisite
 
-engram needs **Node ≥ 20**. Check `node --version`. (Even a Python twin needs
-Node for the engram CLI — see the Python guide.)
+engram needs **Node ≥ 20**. Check `node --version`.
 
 ---
 
@@ -2781,197 +1952,3 @@ real conversation and confirm later turns recall earlier ones.
 
 When finished, give the user a 3-line summary: engram installed, `memory.js`
 added + wired into `ask()`, and how to verify.
-
-
----
-
-> 📄 **`memory-module/guide for implementing memory (python).md`**
-
-# Guide: give your agent long-term memory (Python)
-
-**You are Claude Code or Codex (or any coding agent), reading this file inside the user's agent project.** These files are ready-made — don't rebuild the feature from scratch; just install/wire them in as described below. Your
-job: wire **long-term memory** into their twin using **engram** (a plug-and-play
-associative-memory layer, backed by one SQLite file, no API keys). After this,
-the twin recalls relevant past memories before each turn and writes new ones
-after. Everything you need is embedded.
-
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Python guide.** If their agent is **Node.js**, stop and follow
-> `guide for implementing memory.md` instead.
-
----
-
-## The prompt the user pastes (for reference)
-
-> Read `guide for implementing memory.md` from
-> `https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory.md`
-> and set up long-term memory for my agent.
-
-(For a Python twin, point the same prompt at
-`https://raw.githubusercontent.com/luvishg-growthx/long-term-memory-engram-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20memory%20(python).md`
-instead.)
-
----
-
-## How it works (the loop)
-
-```
-incoming message
-   │
-   ▼
-recall_context(msg) ──► engram recall ──► top-k past memories (injected)
-   │
-   ▼
-your twin answers (claude -p) with that context
-   │
-   ▼
-remember(...) ──► engram add ──► this turn saved to SQLite
-   │
-   … nightly: dream() promotes proven memories, forgets the noise …
-```
-
-engram is offline by default (no API key). Voice/personality stays the user's
-`CLAUDE.md` / `PERSONA.md`; memory just gives it recall.
-
----
-
-## Step 0 — Prerequisite: install the engram CLI (needs Node ≥ 20)
-
-engram is a Node tool. A Python twin shells out to it, so install it **globally**
-once so `engram` is on PATH:
-
-```
-npm install -g github:luvishg-growthx/engram-memory
-```
-
-Check it: `engram help`. (No Node? Install Node ≥ 20 first.)
-
----
-
-## Step 1 — Add the memory wrapper
-
-Create `memory.py` in the project **root** with this content:
-
-```python
-"""memory.py — long-term memory for your twin, powered by engram (CLI).
-Best-effort: no-ops if engram isn't installed so the twin always keeps working."""
-import json, os, shutil, subprocess
-from pathlib import Path
-
-ENGRAM = os.environ.get("ENGRAM_BIN", "engram")
-DB = os.environ.get("ENGRAM_DB", str(Path(__file__).resolve().parent / "memory" / "agent-memory.db"))
-
-
-def available() -> bool:
-    return shutil.which(ENGRAM) is not None or os.path.exists(ENGRAM)
-
-
-def _run(args):
-    Path(DB).parent.mkdir(parents=True, exist_ok=True)
-    return subprocess.run([ENGRAM, *args, "--db", DB], capture_output=True, text=True)
-
-
-def recall_context(query, k=5):
-    if not available() or not query:
-        return ""
-    try:
-        r = _run(["recall", query, "--json", "-k", str(k), "--mark-used"])
-        if r.returncode != 0:
-            return ""
-        hits = json.loads(r.stdout or "[]")
-        if not hits:
-            return ""
-        lines = [f"{i+1}. {' '.join(str(h.get('content','')).split())[:300]}" for i, h in enumerate(hits)]
-        return "## Relevant memories (from past conversations)\n" + "\n".join(lines)
-    except Exception:
-        return ""
-
-
-def remember(text, importance=5, tier="episodic"):
-    if not available() or not text:
-        return
-    try:
-        _run(["add", text, "--tier", tier, "--importance", str(importance)])
-    except Exception:
-        pass
-
-
-def dream():
-    if not available():
-        return
-    try:
-        _run(["dream"])
-    except Exception:
-        pass
-```
-
----
-
-## Step 2 — Wire it into the twin's dispatch
-
-Find where the twin calls `claude -p` (e.g. a `subprocess.run(["claude","-p",...])`
-inside an `ask()` function). Make two small edits:
-
-1. `import memory` at the top.
-2. **Before** the `claude -p` call, recall and prepend context:
-
-```python
-recalled = memory.recall_context(message)
-prompt = f"{recalled}\n\n---\n\n{message}" if recalled else message
-# …pass `prompt` to claude -p instead of the raw `message`.
-```
-
-3. **After** the reply:
-
-```python
-memory.remember(f'User said: "{message[:200]}". Twin replied: "{reply[:200]}"', 5)
-```
-
-Keep edits minimal. If the twin has multiple faces (terminal, Slack), wire it
-into the **shared** dispatch so every face gets memory.
-
----
-
-## Step 3 — Nightly maintenance (optional but recommended)
-
-If the user has the scheduler/cron module, call `memory.dream()` once a day
-(e.g. at 03:00). Otherwise run `engram dream --db memory/agent-memory.db` on a
-system cron.
-
----
-
-## Step 4 — Ignore the DB & verify
-
-1. Add `memory/*.db` to `.gitignore` (rebuildable local cache).
-2. **Restart the twin** so the running process picks up the memory wiring (a twin
-   started before this change has no memory layer).
-3. Verify the round-trip:
-
-```
-python -c "import memory; memory.remember('test memory: the demo worked', 7); print(memory.recall_context('did the demo work?'))"
-```
-
-Expect the test memory back in a "Relevant memories" block.
-
----
-
-## (Optional) Better semantic recall & reranking
-
-- Default embedder is offline/lexical-ish. For true semantics, set
-  `OPENAI_API_KEY` and pass `--provider openai` to engram.
-- engram can rerank with the Claude subscription (no API key) via
-  `--llm claude --rerank`. Skip unless asked.
-
----
-
-## Guardrails (do these, quietly)
-
-- **Additive only.** Add `memory.py` + the recall/remember lines; don't rewrite
-  the twin or touch `CLAUDE.md` / persona.
-- **Best-effort.** Memory failures must never break a reply (the wrapper no-ops).
-- The SQLite file under `memory/` is a rebuildable cache — safe to gitignore.
-
-When finished, give the user a 3-line summary: engram installed (global),
-`memory.py` added + wired into the dispatch, and how to verify.

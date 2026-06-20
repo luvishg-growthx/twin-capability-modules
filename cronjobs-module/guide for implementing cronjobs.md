@@ -5,11 +5,7 @@ job: let their agent **schedule future and recurring messages** — "send me a h
 message at 7:30pm", "remind me every weekday at 9am" — and have it **just work**
 with no manual steps. Everything you need is embedded.
 
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Node.js guide.** If their agent is **Python**, stop and follow
-> `guide for implementing cronjobs (python).md` instead.
+> This module is for **Node.js** twins.
 
 **Do all of this for the user — install deps, write files, AND wire the scheduler
 to auto-start. Don't leave them a separate process to run.**

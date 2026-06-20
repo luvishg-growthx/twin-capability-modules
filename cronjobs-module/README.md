@@ -12,10 +12,8 @@
 >
 > 1. **Follow `PLAN_OF_ACTION.md`** — the ordered execution checklist (works for
 >    Claude *or* Codex).
-> 2. **Detect the stack** (Node vs Python) and **follow the matching guide** for
->    full code:
->    - Node: `https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs.md`
->    - Python: `https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs%20(python).md`
+> 2. **Follow the guide** for full code (this module is for **Node.js** twins):
+>    - `https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs.md`
 > 3. It installs a `schedule-task` skill (the agent records jobs) + a scheduler
 >    daemon (fires them). Voice stays the user's `CLAUDE.md` / `PERSONA.md` —
 >    add no persona of your own.
@@ -37,7 +35,7 @@ running your twin so the message is in your agent's voice — and delivers it.
   literal text.
 - **Delivery:** console + macOS notification out of the box; Slack too if you set
   a bot token + channel (reuse the Slack module's token).
-- **Node *or* Python.**
+- **Node.js.**
 
 ## How it works
 
@@ -66,18 +64,15 @@ Read this and set up scheduled tasks / cronjobs for my agent:
 https://raw.githubusercontent.com/luvishg-growthx/cronjobs-and-reminders-setup-guide-for-your-ai-agent/main/guide%20for%20implementing%20cronjobs.md
 ```
 
-(Python twin? swap in `guide%20for%20implementing%20cronjobs%20(python).md`.) Or
-just **paste the repo link** and Claude routes itself via the block at the top.
+Or just **paste the repo link** and Claude routes itself via the block at the top.
 
 ## Manual install
 
-1. Copy the scheduler for your stack into your project root:
-   - Node: [`node/scheduler.js`](node/scheduler.js) (+ `npm install dotenv`)
-   - Python: [`python/scheduler.py`](python/scheduler.py) (+ `pip install python-dotenv`)
+1. Copy [`node/scheduler.js`](node/scheduler.js) into your project root (+ `npm install dotenv`).
 2. Copy [`.claude/skills/schedule-task/SKILL.md`](.claude/skills/schedule-task/SKILL.md)
    into your project's `.claude/`.
 3. (Optional) Set `SLACK_BOT_TOKEN` + `SLACK_CHANNEL` in `.env` for Slack delivery.
-4. Start the daemon: `node scheduler.js` / `python scheduler.py` (keep it running).
+4. Start the daemon: `node scheduler.js` (keep it running).
 5. Ask your agent to schedule something.
 
 ## Files
@@ -85,7 +80,6 @@ just **paste the repo link** and Claude routes itself via the block at the top.
 | Path                                          | What it is                                  |
 | --------------------------------------------- | ------------------------------------------- |
 | `PLAN_OF_ACTION.md`                           | Ordered execution checklist (Claude/Codex)  |
-| `guide for implementing cronjobs.md`          | Setup guide — **Node** (full code)          |
-| `guide for implementing cronjobs (python).md` | Setup guide — **Python** (full code)        |
+| `guide for implementing cronjobs.md`          | Setup guide — **Node.js** (full code)       |
 | `.claude/skills/schedule-task/SKILL.md`       | Skill that records jobs (runs the CLI)      |
-| `node/` · `python/`                           | `scheduler` (engine, auto-start) + `schedule` (CLI) + env + samples |
+| `node/`                                        | `scheduler` (engine, auto-start) + `schedule` (CLI) + env + samples |

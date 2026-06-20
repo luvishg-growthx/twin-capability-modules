@@ -25,7 +25,7 @@ date "+%Y-%m-%dT%H:%M:%S"
   (fields: minute hour day-of-month month day-of-week; day-of-week 0=Sun..6=Sat).
 
 ## Step 3 — run the schedule CLI (this is the actual scheduling)
-Use `node schedule.js …` (Node twin) **or** `python schedule.py …` (Python twin):
+Use `node schedule.js …`:
 
 One-shot, twin composes the message in the user's voice at fire time:
 ```

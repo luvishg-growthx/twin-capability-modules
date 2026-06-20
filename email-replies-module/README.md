@@ -10,10 +10,8 @@
 > to **read their unread Gmail and draft replies in the agent's own voice**. Do
 > this:
 >
-> 1. **Confirm the stack first** — check whether the user's agent is Node.js
->    (`package.json`/`*.js`) or Python (`requirements.txt`/`*.py`). The skill +
->    `/reply` files here are identical for both; only the optional
->    dispatcher-allowlist step differs (Node vs Python).
+> 1. **This is for a Node.js twin.** The skill + `/reply` files here are the same
+>    regardless of stack; we only support Node now.
 > 2. **Follow `PLAN_OF_ACTION.md`** — the ordered execution checklist (works for
 >    Claude *or* Codex). It links to the guide below for the full code.
 > 2. **Fetch and follow the setup guide** end-to-end — it has the full skill +
@@ -39,8 +37,8 @@ draft replies" and it reads your **unread** Gmail, drafts a reply to each one
 - **Read-only by design.** Never sends, never marks mail as read. It only drafts.
 - **Your voice.** Drafts follow your `CLAUDE.md` / `PERSONA.md` — neutral module,
   your personality.
-- **Runtime-agnostic.** Works whether your twin is Node or Python (it's a Claude
-  Code skill, not dispatcher code).
+- **Node.js twin.** It's a Claude Code skill, not dispatcher code, so it drops
+  into your Node twin cleanly.
 
 ## How it works
 

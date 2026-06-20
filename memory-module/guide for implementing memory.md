@@ -6,11 +6,7 @@ associative-memory layer, backed by one SQLite file, no API keys). After this,
 the twin recalls relevant past memories before each turn and writes new ones
 after — so it gets sharper the longer it runs. Everything you need is embedded.
 
-> ## ⚠️ First: confirm the stack
-> Check whether the user's agent is **Node.js** (`package.json` / `*.js`) or
-> **Python** (`requirements.txt` / `*.py`) — ask if unclear. **This is the
-> Node.js guide.** If their agent is **Python**, stop and follow
-> `guide for implementing memory (python).md` instead.
+> **This module is for Node.js twins** (`package.json` / `*.js`).
 
 ---
 
@@ -46,8 +42,7 @@ user's `CLAUDE.md` / `PERSONA.md`; memory just gives it recall.
 
 ## Step 0 — Prerequisite
 
-engram needs **Node ≥ 20**. Check `node --version`. (Even a Python twin needs
-Node for the engram CLI — see the Python guide.)
+engram needs **Node ≥ 20**. Check `node --version`.
 
 ---
 

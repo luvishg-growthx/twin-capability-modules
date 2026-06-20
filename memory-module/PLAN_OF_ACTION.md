@@ -1,11 +1,10 @@
 # Plan of action — give this agent long-term memory (engram)
 
 **Audience: the coding agent (Claude Code, Codex, or any similar agent) doing the work.** These files are ready-made — integrate them as-is; don't rebuild the feature.
-Ordered execution plan. Full source is in the guides — open the one for the
-detected stack and copy code from it:
+Ordered execution plan. Full source is in the guide — open it and copy code
+from it (this module is for **Node.js** twins):
 
-- Node: `guide for implementing memory.md`
-- Python: `guide for implementing memory (python).md`
+- `guide for implementing memory.md`
 
 Work top to bottom. Each step has a ✅ done-check.
 
@@ -18,34 +17,29 @@ making it self-improving. Voice stays the user's `CLAUDE.md` / `PERSONA.md`.
 
 ## Preconditions
 - [ ] Inside the user's agent project (a `CLAUDE.md` / persona is present).
-- [ ] **Node ≥ 20** (`node --version`) — engram's CLI needs it even for Python twins.
+- [ ] **Node ≥ 20** (`node --version`) — engram's CLI needs it.
 - [ ] `claude --version` works.
 
 ---
 
 ## Steps
 
-### 1. Detect the stack
-- [ ] Node (`package.json`/`*.js`) or Python (`requirements.txt`/`*.py`). Ask
-      once if unclear. Announce it.
-- ✅ Done when: stack stated.
+### 1. Confirm Node.js
+- [ ] This module is for Node.js twins (`package.json`/`*.js`).
+- ✅ Done when: confirmed Node.js project.
 
 ### 2. Install engram (from the fork)
-- [ ] Node: `npm install github:luvishg-growthx/engram-memory` (local bin at
+- [ ] `npm install github:luvishg-growthx/engram-memory` (local bin at
       `node_modules/.bin/engram`).
-- [ ] Python: `npm install -g github:luvishg-growthx/engram-memory` (global
-      `engram` on PATH). Confirm with `engram help`.
 - ✅ Done when: the `engram` CLI runs.
 
 ### 3. Add the memory wrapper
-- [ ] Create `memory.js` (Node) or `memory.py` (Python) in the project root,
-      using the code from the matching guide.
+- [ ] Create `memory.js` in the project root, using the code from the guide.
 - ✅ Done when: the wrapper file exists.
 
 ### 4. Wire it into the twin's dispatch
 - [ ] Find where the twin calls `claude -p` (e.g. `ask()`).
-- [ ] **Before** the call: `recallContext`/`recall_context(message)` → prepend to
-      the prompt.
+- [ ] **Before** the call: `recallContext(message)` → prepend to the prompt.
 - [ ] **After** the reply: `remember(...)` the turn.
 - [ ] If the twin has multiple faces (terminal, Slack), wire into the **shared**
       dispatch so all faces get memory. Keep edits additive — don't rewrite.

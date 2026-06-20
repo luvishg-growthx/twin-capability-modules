@@ -26,12 +26,10 @@ Gmail connected, verified on the real inbox.
 
 ## Steps
 
-### 0. Confirm the stack
-- [ ] Check whether the user's agent is **Node.js** (`package.json`/`*.js`) or
-      **Python** (`requirements.txt`/`*.py`); ask if unclear. The skill +
-      `/reply` files are identical for both — the stack only matters for the
-      optional dispatcher-allowlist step (Step 4).
-- ✅ Done when: stack noted.
+### 0. Node.js twin
+- [ ] This is for a **Node.js** twin. The skill + `/reply` files are the same
+      regardless of stack; we only support Node now.
+- ✅ Done when: noted.
 
 ### 1. Install the skill
 - [ ] Create `.claude/skills/email-replies/SKILL.md` (create folders as needed)
@@ -52,10 +50,10 @@ Gmail connected, verified on the real inbox.
 - ✅ Done when: the user confirms the connector is connected.
 
 ### 4. Dispatcher tool access (only if run unattended)
-- [ ] If the agent is invoked via a `claude -p` script (`twin.js`/`twin.py`/Slack
-      bot): if it uses `--permission-mode bypassPermissions`, do nothing. If it
-      uses an `--allowedTools` list, add: `mcp__claude_ai_Gmail`, `Skill`,
-      `Read`, `Write`.
+- [ ] If the agent is invoked via a `claude -p` script (`twin.js`/Slack bot): if
+      it uses `--permission-mode bypassPermissions`, do nothing. If it uses an
+      `--allowedTools` list, add: `mcp__claude_ai_Gmail`, `Skill`, `Read`,
+      `Write`.
 - [ ] If the user only runs the skill interactively, skip this step.
 - ✅ Done when: the dispatcher (if any) can use Gmail + Skill + Read/Write.
 
